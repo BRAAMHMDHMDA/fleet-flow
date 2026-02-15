@@ -35,21 +35,38 @@ class UserResource extends Resource
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->minLength(3)
                     ->required(),
+
                 TextInput::make('email')
                     ->label('Email address')
                     ->email()
+                    ->unique()
                     ->required(),
+
+                TextInput::make('password')
+                    ->password()
+                    ->autocomplete(false)
+                    ->revealable()
+                    ->confirmed()
+                    ->required(fn (string $operation): bool => $operation === 'create')
+                    ->dehydrated(fn (?string $state): bool => filled($state)),
+
+                TextInput::make('password_confirmation')
+                    ->password()
+                    ->autocomplete(false)
+                    ->revealable()
+                    ->autocomplete(false)
+                    ->requiredWith('password'),
+
                 Select::make('roles')
                     ->label('Roles')
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
+                    ->required()
+                    ->columnSpanFull()
                     ->searchable(),
-                DateTimePicker::make('email_verified_at'),
-                TextInput::make('password')
-                    ->password()
-                    ->required(),
             ]);
     }
 
