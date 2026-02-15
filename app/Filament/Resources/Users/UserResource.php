@@ -19,6 +19,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -50,6 +51,7 @@ class UserResource extends Resource
                     ->revealable()
                     ->confirmed()
                     ->required(fn (string $operation): bool => $operation === 'create')
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->dehydrated(fn (?string $state): bool => filled($state)),
 
                 TextInput::make('password_confirmation')
