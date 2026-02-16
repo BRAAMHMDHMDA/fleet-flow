@@ -58,7 +58,6 @@ class UserResource extends Resource
                     ->password()
                     ->autocomplete(false)
                     ->revealable()
-                    ->autocomplete(false)
                     ->requiredWith('password'),
 
                 Select::make('roles')
