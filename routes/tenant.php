@@ -19,7 +19,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 */
 
 Route::middleware([
-    'web',
+    'auth:client',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
