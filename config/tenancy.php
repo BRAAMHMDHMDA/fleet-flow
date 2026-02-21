@@ -16,10 +16,10 @@ return [
      * Only relevant if you're using the domain or subdomain identification middleware.
      */
     'central_domains' => [
-        '127.0.0.1',
-        'localhost',
-        'fleet-flow.test'
+        env('CENTRAL_DOMAIN', 'fleetflow.test')
     ],
+
+    'central_domain_suffix' => '.' . env('CENTRAL_DOMAIN', 'fleetflow.test'),
 
     /**
      * Tenancy bootstrappers are executed when tenancy is initialized.
