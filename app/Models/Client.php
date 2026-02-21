@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Stancl\Tenancy\Database\Concerns\TenantConnection;
 
 class Client extends Authenticatable
 {
+    use TenantConnection;
     protected $fillable = [
         'name',
         'email',
