@@ -9,22 +9,15 @@ use Stancl\Tenancy\Database\Models\Domain;
 
 class TenantSwitcher extends Component
 {
-    public ?string $selectedTenant = null;
+    public $selectedTenant;
 
     public function mount(): void
     {
-        $this->selectedTenant = session('selected_tenant_id');
+        $this->selectedTenant = Tenant::find(session('selected_tenant_id'));
     }
 
     public function switchTenant(?string $tenantId): void
     {
-        if (! $tenantId) {
-            session()->forget(['selected_tenant_id', 'selected_tenant_name']);
-            $this->selectedTenant = null;
-            $this->dispatch('tenant-switched');
-            return;
-        }
-
         $tenant = Tenant::find($tenantId);
 
         if ($tenant) {
@@ -32,8 +25,7 @@ class TenantSwitcher extends Component
                 'selected_tenant_id' => $tenant->id,
                 'selected_tenant_name' => $tenant->id,
             ]);
-
-            $this->selectedTenant = $tenant->id;
+            $this->selectedTenant = $tenant;
             $this->dispatch('tenant-switched');
         }
     }

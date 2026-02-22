@@ -16,7 +16,8 @@ class InitializeTenancyFromSession
                 tenancy()->initialize($tenant);
             }
         }else{
-            tenancy()->initialize(Tenant::firstOrFail());
+            tenancy()->initialize($tenant = Tenant::firstOrFail());
+            session(['selected_tenant_id' => $tenant->id]);
         }
 
         return $next($request);
