@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\InitializeTenancyFromSession;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -22,8 +23,13 @@ Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
-])->group(function () {
+])
+    ->withoutMiddleware([
+        InitializeTenancyFromSession::class,
+    ])
+    ->group(function () {
     Route::get('/', function () {
+        echo \App\Models\Client::all()->toJson();
         return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
     });
 });
