@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\InitializeTenancyFromSession;
 use App\Http\Middleware\PreventAccessFromTenantDomains;
 use Filament\Http\Middleware\Authenticate;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
@@ -56,6 +57,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->persistentMiddleware([
+                InitializeTenancyFromSession::class,
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
