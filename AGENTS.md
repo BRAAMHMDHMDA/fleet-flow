@@ -1,17 +1,18 @@
 <laravel-boost-guidelines>
 === .ai/project rules ===
 
-## Existing project conventions
+## Project working guidance
 
-- Preserve the existing Laravel 12, Filament 4, and Livewire 3 organization. Check installed versions and use version-matched documentation before making changes.
-- Keep simple Filament resources in `app/Filament/Resources/{PluralName}` with their existing `Pages/Manage{PluralName}` modal CRUD pages. Forms, infolists, and tables currently live in the resource class; extract them only when the task warrants it.
-- Central users, roles, permissions, tenants, and domains are separate from tenant clients. Preserve explicit central/tenant connection boundaries, including validation and background jobs.
-- Retain the project's policy-based `Action:Model` permission naming. Tenant selection and role-assignment requirements must be confirmed rather than inferred from the current implementation.
-- Follow `.editorconfig` and neighboring code. Strict types and some formatting choices are inconsistent; do not normalize unrelated files or introduce architectural layers as incidental cleanup.
-- The test suite uses PHPUnit classes. Adapt any generated Pest-style examples to PHPUnit and `Livewire::test()`; do not install Pest just to use an example.
-- Before running database or tenant tests, verify an isolated test environment. Tenant lifecycle events create, migrate, and delete databases; SQLite `:memory:` does not establish safe isolation for automatic multidatabase tenancy.
-- Do not run `composer run setup` as routine onboarding: it generates an application key and force-runs migrations. Do not read or report secrets from environment files.
-- Keep changes scoped to the user's request. Preserve unrelated work and existing custom guidance. Do not modify global Superpowers installations as part of project tooling maintenance.
+- Read `docs/project-status.md` for the verified baseline, representative files, source findings, and unresolved decisions. Follow the path rules discovered through `.ai/rules/index.md`, including the feature-branch and focused-commit workflow in `.ai/rules/general.md`.
+- Check installed versions and use matching Laravel, Filament, and Livewire documentation through Boost. Inspect the returned package/version; an unrelated or wrong-major search result is not authority. Frontend manifest ranges are not installed versions; verify a lockfile or installed metadata when available.
+- Reuse neighboring implementations and the established resource, model, and policy boundaries. Do not infer product requirements from current behavior or copy a known problem as a convention.
+- For custom UI work, use `frontend-design` when available while preserving the existing visual identity and Blade/Livewire/Tailwind stack. For Filament work, prioritize native components and supported customization mechanisms; consult the existing panel and switcher before adding UI.
+- Activate relevant available Superpowers workflows: brainstorming for new behavior, planning/execution for substantial implementation, systematic debugging for failures, test-driven development for behavior changes, and review plus verification before completion. Apply them within the authorized scope and reuse the feature branch; a workflow or worktree is not a reason to create a branch per subtask. Do not modify global Superpowers installations or resolve duplicate skills as incidental work.
+- Follow `.editorconfig` and neighboring code. Strict types, broader formatting normalization, and policy record-parameter signatures remain unresolved; generated general typing advice does not settle those choices. Keep any formatter changes limited to the task's files.
+- PHPUnit is the existing test tooling, not evidence of a mature personal testing style. Adapt generated Pest examples to PHPUnit and `Livewire::test()` instead of installing Pest.
+- Before database or tenant tests, verify effective isolated connections, disposable tenant databases/storage, hostname and permission fixtures, and cleanup. Tenant lifecycle events create, migrate, and delete databases; SQLite `:memory:` alone does not establish safe multidatabase isolation.
+- Do not run `composer run setup` as routine onboarding: it generates an application key and force-runs migrations. Do not expose environment secrets. Keep unrelated work and custom guidance intact.
+- Maintain these instructions in `.ai/guidelines/project.blade.php`; regenerate with `php artisan boost:install --guidelines --skills --no-interaction` and review the diff. Use Boost's `record-rule` tool for durable path rules and preserve its generated index. Keep detailed evidence and open decisions in `docs/project-status.md`, not repeated throughout the generated guidance.
 
 === foundation rules ===
 
