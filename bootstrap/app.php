@@ -15,7 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'tenant.session' => InitializeTenancyFromSession::class,
         ]);
-        $middleware->appendToGroup('web', InitializeTenancyFromSession::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

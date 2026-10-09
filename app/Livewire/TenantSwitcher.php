@@ -13,7 +13,7 @@ class TenantSwitcher extends Component
 
     public function mount(): void
     {
-        $this->selectedTenant = Tenant::find(session('selected_tenant_id'));
+        $this->selectedTenant = Tenant::find(session('selected_tenant_id')??Tenant::first()->id);
     }
 
     public function switchTenant(?string $tenantId): void
